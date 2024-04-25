@@ -3,19 +3,28 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
 
-import testRoutes from "./routes/testRoutes";
+// import testRoutes from "./routes/testRoutes";
+import { saveData } from "./services/saveData";
+
+import jobRoutes from "./routes/jobRoutes";
+
+// import { main } from "./config/script";
 
 dotenv.config();
 const app = express();
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
-// database connection
-// connectDB();
-// routes
-app.use("/test", testRoutes);
-// listern
-const port = process.env.PORT;
+connectDB().catch((err) => {
+	console.error(err.stack || err);
+	process.exit(1);
+});
+// saveData();
+// app.use("/test", testRoutes);
+app.use("/job", jobRoutes);
 
-app.listen(port, () => {
-	console.log(`Server is running on port ${port}`);
+// listern
+const PORT = process.env.PORT;
+
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
 });

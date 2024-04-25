@@ -1,8 +1,7 @@
-// test routes
-import { Router } from "express";
-import { testRequest } from "../controllers/test/testRequest";
-const router = Router();
+// // test routes
+// import { Router } from "express";
+// const router = Router();
 
-router.get("/", testRequest);
+// router.get("/slow", testRequest);
 
-export default router;
+// export default router;
