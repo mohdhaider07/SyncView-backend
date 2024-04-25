@@ -122,7 +122,7 @@ export async function website1() {
 		browserWSEndpoint: SBR_WS_ENDPOINT,
 	});
 	console.log("Connected to Scraping Browser!");
-	const url = "https://atypicaladvantage.in/find-a-job?page=8";
+	const url = "https://atypicaladvantage.in/find-a-job";
 	// const domain = url.split("/")[2];
 	try {
 		const page = await browser.newPage();
@@ -151,9 +151,10 @@ export async function website1() {
 				const role = await page.$eval("h1.h3.mb-1", (el) => el.textContent);
 				// company
 				const company = await page.$eval(
-					"div.text-muted",
+					"div.d-block.d-md-flex.mb-4 > div > div.text-muted",
 					(el) => el.textContent
 				);
+				console.log("company", company);
 				// location
 				const location = await page.$eval(
 					"div.col-md.mb-3.mb-md-0 > span.pl-4.d-inline-block",

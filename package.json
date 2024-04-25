@@ -19,6 +19,7 @@
 	},
 	"homepage": "https://github.com/arishgithub/empower-share#readme",
 	"devDependencies": {
+		"@types/cors": "^2.8.17",
 		"@types/node": "^20.12.7",
 		"nodemon": "^3.1.0",
 		"ts-node": "^10.9.2",

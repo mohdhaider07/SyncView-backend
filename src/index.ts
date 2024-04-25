@@ -2,6 +2,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
+import cors from "cors";
 
 // import testRoutes from "./routes/testRoutes";
 import { saveData } from "./services/saveData";
@@ -12,6 +13,7 @@ import jobRoutes from "./routes/jobRoutes";
 
 dotenv.config();
 const app = express();
+app.use(cors());
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
 connectDB().catch((err) => {
