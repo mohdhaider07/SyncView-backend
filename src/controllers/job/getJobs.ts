@@ -14,14 +14,18 @@ export const getJobs = async (req: Request, res: Response) => {
 		let filter = {};
 		if (disability) {
 			filter = {
-				disabilityTypes: { $regex: new RegExp(`\\b${disability}\\b`, "i") }, // Match whole word, case-insensitive
+				disabilityTypes: {
+					$regex: new RegExp(`\\b${disability || "Pwd"}\\b`, "i"),
+				}, // Match whole word, case-insensitive
 			};
 		}
 
-		if (location) {
+		if (location && location == "Remote") {
 			filter = {
 				...filter,
-				location: { $regex: new RegExp(`\\b${location}\\b`, "i") }, // Match whole word, case-insensitive
+				location: {
+					$regex: new RegExp(`\\b${location || "India"}\\b`, "i"),
+				}, // Match whole word, case-insensitive
 			};
 		}
 

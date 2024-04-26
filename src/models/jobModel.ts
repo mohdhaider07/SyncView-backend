@@ -30,7 +30,6 @@ const jobSchema = new Schema(
 		},
 		description: {
 			type: String,
-			required: true,
 		},
 	},
 	{
