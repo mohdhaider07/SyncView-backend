@@ -54,7 +54,7 @@ export const getJobs = async (req: Request, res: Response) => {
 			};
 		}
 
-		const jobs = await Job.find(filter);
+		const jobs = await Job.find(filter).limit(10);
 		console.log(jobs.length);
 		// from the jobs get all the unique locations, and company names
 		const locations = jobs.map((job) => job.location);
