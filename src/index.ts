@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
 import cors from "cors";
+import corn from "node-cron";
 
 // import testRoutes from "./routes/testRoutes";
 import { saveData } from "./services/saveData";
@@ -20,7 +21,12 @@ connectDB().catch((err) => {
 	console.error(err.stack || err);
 	process.exit(1);
 });
-// saveData();
+
+// corn.schedule("* * */23 * * *", () => {
+// 	console.log("corn running a task scraping data every 23 hours");
+// 	saveData();
+// });
+
 // app.use("/test", testRoutes);
 app.use("/job", jobRoutes);
 

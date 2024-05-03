@@ -2,6 +2,7 @@
 import { Request, Response } from "express";
 import Job from "../../models/jobModel";
 export const getJobs = async (req: Request, res: Response) => {
+	console.log("getting the jobs");
 	console.log(req.query.location);
 	const disability: string | undefined = req.query.disability as
 		| string
@@ -10,6 +11,12 @@ export const getJobs = async (req: Request, res: Response) => {
 	const location: string | undefined = req.query.location as
 		| string
 		| undefined;
+
+	// city and company
+	// get all the jobs from the db
+	const city: string | undefined = req.query.city as string | undefined;
+	const company: string | undefined = req.query.company as string | undefined;
+
 	try {
 		let filter = {};
 		if (disability) {
@@ -29,9 +36,57 @@ export const getJobs = async (req: Request, res: Response) => {
 			};
 		}
 
+		if (city) {
+			filter = {
+				...filter,
+				location: {
+					$regex: new RegExp(`\\b${city || "India"}\\b`, "i"),
+				}, // Match whole word, case-insensitive
+			};
+		}
+
+		if (company) {
+			filter = {
+				...filter,
+				company: {
+					$regex: new RegExp(`\\b${company || "India"}\\b`, "i"),
+				}, // Match whole word, case-insensitive
+			};
+		}
+
 		const jobs = await Job.find(filter);
 		console.log(jobs.length);
-		res.json(jobs);
+		// from the jobs get all the unique locations, and company names
+		const locations = jobs.map((job) => job.location);
+		const companies = jobs.map((job) => job.company);
+
+		// Filter out duplicates manually
+		const uniqueLocations: string[] = [];
+		const uniqueCompanies: string[] = [];
+
+		locations.forEach((location) => {
+			if (
+				typeof location === "string" &&
+				!uniqueLocations.includes(location)
+			) {
+				uniqueLocations.push(location);
+			}
+		});
+
+		companies.forEach((company) => {
+			if (
+				typeof company === "string" &&
+				!uniqueCompanies.includes(company)
+			) {
+				uniqueCompanies.push(company);
+			}
+		});
+
+		res.json({
+			jobs: jobs,
+			locations: uniqueLocations,
+			companies: uniqueCompanies,
+		});
 	} catch (err) {
 		console.log(err);
 		res.status(500).send("Internal server error");
