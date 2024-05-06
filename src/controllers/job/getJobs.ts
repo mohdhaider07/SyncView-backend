@@ -12,6 +12,8 @@ export const getJobs = async (req: Request, res: Response) => {
 		| string
 		| undefined;
 
+	const page = parseInt(req.query.page as string) || 1;
+
 	// city and company
 	// get all the jobs from the db
 	const city: string | undefined = req.query.city as string | undefined;
@@ -81,9 +83,14 @@ export const getJobs = async (req: Request, res: Response) => {
 				uniqueCompanies.push(company);
 			}
 		});
+		// add pagination logic here limit will be of 5 and offset will be of 5
+		const limit = 5;
+		const offset = (page - 1) * limit;
+		const paginatedJobs = jobs.slice(offset, offset + limit);
+
 
 		res.json({
-			jobs: jobs,
+			jobs: paginatedJobs,
 			locations: uniqueLocations,
 			companies: uniqueCompanies,
 		});
