@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import Job from "../../models/jobModel";
 export const getJobs = async (req: Request, res: Response) => {
 	console.log("getting the jobs");
-	console.log(req.query.location);
+	// console.log(req.query.location);
 	const disability: string | undefined = req.query.disability as
 		| string
 		| undefined;
@@ -56,8 +56,8 @@ export const getJobs = async (req: Request, res: Response) => {
 			};
 		}
 
-		const jobs = await Job.find(filter).limit(2);
-		console.log(jobs.length);
+		const jobs = await Job.find(filter);
+		// console.log(jobs.length);
 		// from the jobs get all the unique locations, and company names
 		const locations = jobs.map((job) => job.location);
 		const companies = jobs.map((job) => job.company);
