@@ -90,6 +90,7 @@ export const getJobs = async (req: Request, res: Response) => {
 
 
 		res.json({
+			pages: 5,
 			jobs: paginatedJobs,
 			locations: uniqueLocations,
 			companies: uniqueCompanies,
