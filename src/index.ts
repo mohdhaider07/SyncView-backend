@@ -57,6 +57,14 @@ io.on("connection", (socket) => {
   //     socket.broadcast.to(roomId).emit("seek", time);
   //   });
 
+  // changeVideo it will     socket.emit("changeVideo", roomId, selectedVideo);
+  socket.on("changeVideo", (roomId, selectedVideo) => {
+    console.log(
+      `Change video event in room ${roomId} to video ${selectedVideo}`
+    );
+    socket.broadcast.to(roomId).emit("changeVideo", selectedVideo);
+  });
+
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id);
   });
