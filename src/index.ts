@@ -26,7 +26,7 @@ const PORT = process.env.PORT;
 const httpServer = createServer(app); // Create an HTTP server using the Express app
 const io = new Server(httpServer, {
   cors: {
-    origin: "*", // Adjust the origin as per your needs
+    origin: ["https://sync-view.vercel.app/", "http://localhost:5173"], // Adjust the origin as per your needs
     methods: ["GET", "POST"],
   },
 });
