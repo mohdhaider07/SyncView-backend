@@ -31,7 +31,6 @@ const io = new Server(httpServer, {
   },
 });
 
-// Socket.io setup
 io.on("connection", (socket) => {
   console.log("====================================");
   console.log("A user connected", socket.id);
@@ -44,19 +43,19 @@ io.on("connection", (socket) => {
 
   socket.on("play", (roomId, time) => {
     console.log(`Play event in room ${roomId} at time ${time}`);
-    // emit to all user except the sender
-    socket.to(roomId).emit("play", time);
+    // Emit to all users in the room except the sender
+    socket.broadcast.to(roomId).emit("play", time);
   });
 
   socket.on("pause", (roomId, time) => {
     console.log(`Pause event in room ${roomId} at time ${time}`);
-    socket.to(roomId).emit("pause", time);
+    socket.broadcast.to(roomId).emit("pause", time);
   });
 
-  socket.on("seek", (roomId, time) => {
-    console.log(`Seek event in room ${roomId} at time ${time}`);
-    socket.to(roomId).emit("seek", time);
-  });
+  //   socket.on("seek", (roomId, time) => {
+  //     console.log(`Seek event in room ${roomId} at time ${time}`);
+  //     socket.broadcast.to(roomId).emit("seek", time);
+  //   });
 
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id);
