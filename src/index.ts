@@ -4,20 +4,25 @@ import connectDB from "./config/db";
 import cors from "cors";
 import { createServer } from "http"; // Import createServer from http
 import { Server } from "socket.io"; // Import Server from socket.io
+import morgan from "morgan";
 
 import roomRoutes from "./routes/roomRoutes";
+import userRoutes from "./routes/userRoutes";
 
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
+
 connectDB().catch((err) => {
   console.error(err.stack || err);
   process.exit(1);
 });
 
-app.use("/api/rooms", roomRoutes);
+app.use("/api/room", roomRoutes);
+app.use("/api/user", userRoutes);
 
 // listern
 const PORT = process.env.PORT;

@@ -1,13 +1,21 @@
 // src/routes/roomRoutes.ts
 import { Router } from "express";
-import * as roomController from "../controllers/roomController";
+import {
+  addVideoUrl,
+  createRoom,
+  deleteRoom,
+  deleteVideo,
+  getRoom,
+} from "../controllers/roomController";
+import { checkAuth } from "../middleware/user";
 
 const router = Router();
 
-router.post("/", roomController.createRoom);
-router.get("/:roomId", roomController.getRoom);
-// deleteRoom
-router.delete("/:roomId", roomController.deleteRoom);
-// add more youtube url to room
-router.put("/:roomId", roomController.addVideoUrl);
+router.post("/create", checkAuth, createRoom);
+router.put("/:roomId/addVideo", checkAuth, addVideoUrl);
+router.get("/:roomId", getRoom);
+router.delete("//:roomId", checkAuth, deleteRoom);
+// delete particular video from room
+router.delete("/delete-video/:roomId/", checkAuth, deleteVideo);
+
 export default router;
