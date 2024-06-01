@@ -20,16 +20,19 @@ export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
     const user = await userService.findUserByEmail(email);
+    console.log("e1", user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     const isMatch = await userService.comparePasswords(password, user.password);
+    console.log("e2", isMatch);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     // send jwt token
     const token = userService.createToken(user);
     // send everything but not password of the user
+
     user.password = "";
     res.status(200).json({ token, user });
   } catch (error: any) {

@@ -69,6 +69,10 @@ io.on("connection", (socket) => {
     );
     socket.broadcast.to(roomId).emit("changeVideo", selectedVideo);
   });
+  socket.on("newUrlAdded", (roomId, newUrl) => {
+    console.log(`newUrlAdded event in room ${roomId} to url ${newUrl}`);
+    socket.broadcast.to(roomId).emit("newUrlAdded", newUrl);
+  });
 
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id);
