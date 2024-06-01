@@ -14,7 +14,7 @@ const router = Router();
 router.post("/create", checkAuth, createRoom);
 router.put("/:roomId/addVideo", checkAuth, addVideoUrl);
 router.get("/:roomId", getRoom);
-router.delete("//:roomId", checkAuth, deleteRoom);
+router.delete("/:roomId", checkAuth, deleteRoom);
 // delete particular video from room
 router.delete("/delete-video/:roomId/", checkAuth, deleteVideo);
 

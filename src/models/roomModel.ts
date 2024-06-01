@@ -15,7 +15,7 @@ const roomSchema = new Schema<IRoom>(
     videoUrl: [{ type: String, required: true }],
     roomId: { type: String, required: true, unique: true },
     createdBy: { type: Schema.Types.ObjectId, ref: "User" },
-    isPrivate: { type: Boolean, default: true },
+    isPrivate: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
