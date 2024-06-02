@@ -80,7 +80,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("toggleControl", (roomId, controlState) => {
-    socket.to(roomId).emit("controlToggled", controlState);
+    console.log(
+      `toggleControl event in room ${roomId} to state ${controlState}`
+    );
+    socket.to(roomId).emit("toggleControl", controlState);
   });
 
   socket.on("disconnect", () => {
