@@ -74,6 +74,15 @@ io.on("connection", (socket) => {
     socket.broadcast.to(roomId).emit("newUrlAdded", newUrl);
   });
 
+  socket.on("urlRemoved", (roomId, urlRemoved) => {
+    console.log(`urlRemoved event in room ${roomId} to url ${urlRemoved}`);
+    socket.broadcast.to(roomId).emit("urlRemoved", urlRemoved);
+  });
+
+  socket.on("toggleControl", (roomId, controlState) => {
+    socket.to(roomId).emit("controlToggled", controlState);
+  });
+
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id);
   });
