@@ -1,7 +1,8 @@
 // src/services/roomService.ts
 import Room, { IRoom } from "../models/roomModel";
 import User from "../models/userModel";
-import { generateUniqueId } from "../utils/utils";
+import { generateUniqueId, getPlaylistVideos } from "../utils/utils";
+
 export const createRoom = async (
   videoUrl: string[],
   createdBy: string
@@ -84,4 +85,17 @@ export const deleteVideo = async (
     return await room.save();
   }
   return null;
+};
+
+// addPlaylist
+export const addPlaylist = async (
+  roomId: string,
+  playlistUrl: string
+): Promise<IRoom | null> => {
+  //
+  const videoUrls = await getPlaylistVideos(playlistUrl);
+  await Room.findByIdAndUpdate(roomId, {
+    $addToSet: { videoUrl: { $each: videoUrls } },
+  });
+  return videoUrls;
 };

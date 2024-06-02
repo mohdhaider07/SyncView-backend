@@ -79,3 +79,23 @@ export const deleteVideo = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// addplaylist video
+export const addPlaylist = async (req: Request, res: Response) => {
+  const { roomId } = req.params;
+  const { playlistUrl } = req.body;
+  try {
+    const videoUrls = await roomService.addPlaylist(roomId, playlistUrl);
+
+    if (videoUrls) {
+      res
+        .status(200)
+        .send({ message: "Playlist added successfully", videoUrls });
+    } else {
+      res.status(404).json({ message: "Room not found" });
+    }
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
