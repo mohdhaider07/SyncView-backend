@@ -25,7 +25,7 @@ app.use("/api/room", roomRoutes);
 app.use("/api/user", userRoutes);
 
 // listern
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 // Create HTTP server and integrate Socket.io
 const httpServer = createServer(app); // Create an HTTP server using the Express app

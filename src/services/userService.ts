@@ -80,3 +80,8 @@ export const createToken = (user: IUser): string => {
 export const verifyToken = (token: string): any => {
   return jwt.verify(token, process.env.JWT_SECRET_KEY!);
 };
+
+// getUserById;
+export const getUserById = async (userId: string): Promise<IUser> => {
+  return await User.findById(userId).select("-password");
+};

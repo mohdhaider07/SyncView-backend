@@ -43,6 +43,6 @@ export const checkAuth = async (
     }
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(403).json({ message: error.message });
   }
 };

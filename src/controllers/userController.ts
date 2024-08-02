@@ -84,3 +84,14 @@ export const getInvitations = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getAuthUser = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  try {
+    const user = await userService.getUserById(userId);
+    res.status(200).json(user);
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};

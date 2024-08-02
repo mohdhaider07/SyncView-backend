@@ -7,6 +7,7 @@ import {
   inviteUser,
   getInvitations,
   loginUser,
+  getAuthUser,
 } from "../controllers/userController";
 import { checkAuth } from "../middleware/user";
 
@@ -15,7 +16,8 @@ const router = express.Router();
 router.post("/register", createUser);
 router.post("/login", loginUser);
 router.get("/:userId/rooms", checkAuth, getUserRooms);
-//  till here done
+// auth for user information
+router.get("/:userId", checkAuth, getAuthUser);
 
 router.post("/:userId/join/:roomId", joinRoom);
 router.post("/:userId/invite/:roomId", inviteUser);
