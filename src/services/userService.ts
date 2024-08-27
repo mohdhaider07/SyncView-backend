@@ -68,7 +68,12 @@ export const comparePasswords = async (
   password: string,
   hashedPassword: string
 ): Promise<boolean> => {
-  return await bcrypt.compare(password, hashedPassword);
+  try {
+    return await bcrypt.compare(password, hashedPassword);
+  } catch (err: any) {
+    console.log(err);
+    return false;
+  }
 };
 // create token
 export const createToken = (user: IUser): string => {

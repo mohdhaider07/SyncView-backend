@@ -15,8 +15,8 @@ export const checkAuth = async (
 ) => {
   const { adminEmail } = req.body;
   const token = req.header("Authorization")?.split(" ")[1];
-  console.log("token in middlewhere", token);
-  console.log("adminEmail in middlewhere", adminEmail);
+  // console.log("token in middlewhere", token);
+  // console.log("adminEmail in middlewhere", adminEmail);
   if (adminEmail) {
     req.user = await findUserByEmail(adminEmail);
     return next();
@@ -36,7 +36,7 @@ export const checkAuth = async (
 
     // Now TypeScript knows decodedUser is a JwtPayload
     const decodedPayload = decodedUser as JwtPayload;
-    console.log("decodedPayload", decodedPayload);
+    // console.log("decodedPayload", decodedPayload);
     if (typeof decodedPayload === "object" && "email" in decodedPayload) {
       req.user = await findUserByEmail(decodedPayload.email);
       next();

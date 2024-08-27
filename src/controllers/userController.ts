@@ -6,7 +6,10 @@ import * as roomService from "../services/roomService";
 export const createUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
   // hash the password
+  console.log("e1");
   const hashedPassword = await userService.hashPassword(password);
+  console.log("e2");
+
   try {
     const user = await userService.createUser(username, email, hashedPassword);
     res.status(201).json({ message: "User created" });
@@ -17,25 +20,35 @@ export const createUser = async (req: Request, res: Response) => {
 };
 // login function
 export const loginUser = async (req: Request, res: Response) => {
+  console.log("user tryied to login");
   const { email, password } = req.body;
   try {
     const user = await userService.findUserByEmail(email);
-    console.log("e1", user);
+    // console.log("e1", user);
+    console.log("e1");
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+
+    // console.log("user", user);
+    console.log(password, user.password);
     const isMatch = await userService.comparePasswords(password, user.password);
-    console.log("e2", isMatch);
+    console.log("e2");
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
+    // console.log("e4");
+
     // send jwt token
     const token = userService.createToken(user);
     // send everything but not password of the user
 
     user.password = "";
     res.status(200).json({ token, user });
+    console.log("e4");
   } catch (error: any) {
+    console.log(error);
     console.error(error);
     res.status(500).json({ message: error.message });
   }
